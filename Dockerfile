@@ -62,3 +62,4 @@ RUN echo "root:${PASSWORD}" | chpasswd
 #CMD ["./AdGuardHome", \
 #     "--work-dir", "/opt/adguardhome/work", \
 #     "--config", "/opt/adguardhome/conf/AdGuardHome.yaml"]
+CMD ["/bin/sh -c 'sleep infinity'"]
