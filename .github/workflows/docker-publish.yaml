@@ -52,25 +52,6 @@ jobs:
           load: true
           tags: agh:local
 
-      - name: Get AdGuardHome version from built image
-        id: get_version_from_image
-        run: |
-          RAW_VERSION=$(docker run --rm agh:local ./AdGuardHome --version || true)
-
-          echo "Raw version output: $RAW_VERSION"
-
-          BASE_VERSION=$(echo "$RAW_VERSION" | grep -Eo '[0-9]+\.[0-9]+\.[0-9]+' | head -n1)
-
-          if [ -z "$BASE_VERSION" ]; then
-            echo "$RAW_VERSION"
-            exit 1
-          fi
-
-          FINAL_VERSION="v$BASE_VERSION"
-
-          echo "Detected AdGuardHome version: $FINAL_VERSION"
-          echo "AGH_VERSION=$FINAL_VERSION" >> "$GITHUB_OUTPUT"
-
       - name: Check if image with this version already exists in GHCR
         id: check_image
         run: |
