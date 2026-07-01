@@ -63,4 +63,4 @@ RUN echo "root:root" | chpasswd
 #CMD ["./AdGuardHome", \
 #     "--work-dir", "/opt/adguardhome/work", \
 #     "--config", "/opt/adguardhome/conf/AdGuardHome.yaml"]
-CMD ["/bin/sh -c 'sleep infinity'"]
+CMD ["/bin/sh -c 'service ssh start && sleep infinity'"]
