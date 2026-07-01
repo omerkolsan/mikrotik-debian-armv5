@@ -1,32 +1,32 @@
 # STAGE 1: Builder
-# Downloads and extracts the AdGuardHome binary for ARMv5
-FROM arm32v5/debian:bookworm-slim AS builder
+# Downloads and extracts the Debian binary for ARMv5
+#FROM arm32v5/debian:bookworm-slim AS builder
 
-ARG DEBIAN_FRONTEND=noninteractive
-WORKDIR /tmp/build
+#ARG DEBIAN_FRONTEND=noninteractive
+#WORKDIR /tmp/build
 
 # Install build dependencies
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-        ca-certificates \
-        curl \
-        jq \
-        tar && \
-    rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && \
+    #apt-get install -y --no-install-recommends \
+        #ca-certificates \
+        #curl \
+        #jq \
+        #tar && \
+    #rm -rf /var/lib/apt/lists/*
 
 # Download and extract the latest AdGuardHome release
-RUN set -eux; \
-    AGH_VERSION=$(curl -sL https://api.github.com/repos/AdguardTeam/AdGuardHome/releases/latest | jq -r .tag_name | sed 's/v//'); \
-    echo "Downloading AdGuardHome v${AGH_VERSION}..."; \
-    curl -fSL "https://github.com/AdguardTeam/AdGuardHome/releases/download/v${AGH_VERSION}/AdGuardHome_linux_armv5.tar.gz" -o agh.tar.gz; \
-    tar -xzf agh.tar.gz;
+#RUN set -eux; \
+    #AGH_VERSION=$(curl -sL https://api.github.com/repos/AdguardTeam/AdGuardHome/releases/latest | jq -r .tag_name | sed 's/v//'); \
+    #echo "Downloading AdGuardHome v${AGH_VERSION}..."; \
+    #curl -fSL "https://github.com/AdguardTeam/AdGuardHome/releases/download/v${AGH_VERSION}/AdGuardHome_linux_armv5.tar.gz" -o agh.tar.gz; \
+    #tar -xzf agh.tar.gz;
 
 # STAGE 2: Final Runtime
 FROM arm32v5/debian:bookworm-slim
 
 # Metadata
-LABEL maintainer="RAW-Network" \
-      description="AdGuardHome Docker image optimized for ARMv5 (legacy devices)"
+LABEL maintainer="OMER KOLSAN" \
+      description="Debian Docker image optimized for ARMv5 (legacy devices)"
 
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=UTC \
@@ -34,25 +34,27 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 # Install critical runtime dependencies
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
+				curl \
+				nano\
         ca-certificates \
         tzdata && \
     rm -rf /var/lib/apt/lists/*
 
-WORKDIR /opt/adguardhome
+#WORKDIR /opt/adguardhome
 
 # Copy binary from builder stage
-COPY --from=builder /tmp/build/AdGuardHome/AdGuardHome .
+#COPY --from=builder /tmp/build/AdGuardHome/AdGuardHome .
 
 # Setup directories and permissions
-RUN mkdir -p work conf && \
-    chmod +x ./AdGuardHome
+#RUN mkdir -p work conf && \
+    #chmod +x ./AdGuardHome
 
 # Expose Ports
 # DNS (53), DHCP (67/68), HTTP/S (80/443), DoT/DoQ (853), DoQ-Alt (784/8853), DNSCrypt (5443), Setup (3000)
-EXPOSE 53/tcp 53/udp 67/udp 68/udp 80/tcp 443/tcp 853/tcp 853/udp 784/udp 8853/udp 5443/tcp 5443/udp 3000/tcp
+#EXPOSE 53/tcp 53/udp 67/udp 68/udp 80/tcp 443/tcp 853/tcp 853/udp 784/udp 8853/udp 5443/tcp 5443/udp 3000/tcp
 
 # Start AdGuardHome
-CMD ["./AdGuardHome", \
-     "--work-dir", "/opt/adguardhome/work", \
-     "--config", "/opt/adguardhome/conf/AdGuardHome.yaml"]
+#CMD ["./AdGuardHome", \
+#     "--work-dir", "/opt/adguardhome/work", \
+#     "--config", "/opt/adguardhome/conf/AdGuardHome.yaml"]
