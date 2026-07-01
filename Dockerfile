@@ -52,7 +52,7 @@ RUN apt-get update && \
     #chmod +x ./AdGuardHome
 
 # Set root password
-RUN echo "root:${PASSWORD}" | chpasswd
+RUN echo "root:root" | chpasswd
 
 # Expose Ports
 # DNS (53), DHCP (67/68), HTTP/S (80/443), DoT/DoQ (853), DoQ-Alt (784/8853), DNSCrypt (5443), Setup (3000)
