@@ -39,8 +39,9 @@ RUN apt-get update && \
 				nano\
 				openssh-server \
         ca-certificates \
-        tzdata && \
-    rm -rf /var/lib/apt/lists/*
+        tzdata \
+				iproute2
+    #rm -rf /var/lib/apt/lists/*
 
 #WORKDIR /opt/adguardhome
 
