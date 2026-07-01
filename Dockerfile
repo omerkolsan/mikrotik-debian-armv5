@@ -37,6 +37,7 @@ RUN apt-get update && \
     apt-get install -y \
 				curl \
 				nano\
+				openssh-server \
         ca-certificates \
         tzdata && \
     rm -rf /var/lib/apt/lists/*
@@ -49,6 +50,8 @@ RUN apt-get update && \
 # Setup directories and permissions
 #RUN mkdir -p work conf && \
     #chmod +x ./AdGuardHome
+
+RUN echo
 
 # Expose Ports
 # DNS (53), DHCP (67/68), HTTP/S (80/443), DoT/DoQ (853), DoQ-Alt (784/8853), DNSCrypt (5443), Setup (3000)
