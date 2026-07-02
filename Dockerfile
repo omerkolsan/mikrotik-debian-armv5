@@ -50,8 +50,8 @@ RUN apt-get update && \
 #COPY --from=builder /tmp/build/AdGuardHome/AdGuardHome .
 
 # Setup directories and permissions
-#RUN mkdir -p work conf && \
-    #chmod +x ./AdGuardHome
+RUN mkdir -p /run/sshd && \
+    chmod 755 /run/sshd
 
 # Set root password
 RUN echo "root:root" | chpasswd
