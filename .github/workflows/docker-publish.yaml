@@ -56,7 +56,7 @@ jobs:
         id: check_image
         run: |
           docker manifest inspect \
-            ghcr.io/${{ steps.lower_repo_name.outputs.REPO_LOWER }}:${{ steps.get_version_from_image.outputs.AGH_VERSION }}
+            ghcr.io/${{ steps.lower_repo_name.outputs.REPO_LOWER }}:latest 
         continue-on-error: true
 
       - name: Tag and push image to GHCR
@@ -64,7 +64,7 @@ jobs:
         run: |
           IMAGE_LOCAL="agh:local"
           REPO="ghcr.io/${{ steps.lower_repo_name.outputs.REPO_LOWER }}"
-          VERSION="${{ steps.get_version_from_image.outputs.AGH_VERSION }}"
+          VERSION=latest
 
           echo "Tagging $IMAGE_LOCAL as:"
           echo "  $REPO:latest"
