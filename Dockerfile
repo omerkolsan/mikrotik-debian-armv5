@@ -38,8 +38,9 @@ RUN apt-get update && \
 				curl \
 				nano\
 				openssh-server \
-        ca-certificates \
-        tzdata \
+			    iputils-ping \
+                ca-certificates \
+                tzdata \
 				iproute2
     #rm -rf /var/lib/apt/lists/*
 
