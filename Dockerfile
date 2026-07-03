@@ -47,9 +47,10 @@ RUN apt-get update && \
     #rm -rf /var/lib/apt/lists/*
 
 # tzdata kurun ve zaman dilimini sembolik link ile bağlayın
-RUN apk add --no-cache tzdata \
+RUN apt-get install -y --no-install-recommends tzdata \
     && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
-    && echo $TZ > /etc/timezone
+    && echo $TZ > /etc/timezone \
+    && rm -rf /var/lib/apt/lists/*
 
 #WORKDIR /opt/adguardhome
 
