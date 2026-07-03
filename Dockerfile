@@ -29,8 +29,10 @@ LABEL maintainer="OMER KOLSAN" \
       description="Debian Docker image optimized for ARMv5 (legacy devices)"
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    TZ=UTC+3 \
-    LANG=tr_TR.UTF-8 
+    TZ=Europe/Istanbul \
+    ENV LANG=tr_TR.UTF-8
+		ENV LANGUAGE=tr_TR:tr
+		ENV LC_ALL=tr_TR.UTF-8 
 
 # Install critical runtime dependencies
 RUN apt-get update && \
@@ -44,7 +46,10 @@ RUN apt-get update && \
 				iproute2
     #rm -rf /var/lib/apt/lists/*
 
-RUN timedatectl set-timezone Europe/Istanbul
+# tzdata kurun ve zaman dilimini sembolik link ile bağlayın
+RUN apk add --no-cache tzdata \
+    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime \
+    && echo $TZ > /etc/timezone
 
 #WORKDIR /opt/adguardhome
 
