@@ -30,8 +30,8 @@ LABEL maintainer="OMER KOLSAN" \
 
 ENV DEBIAN_FRONTEND=noninteractive \
     TZ=Europe/Istanbul \
-    LANG=tr_TR.UTF-8
-		LANGUAGE=tr_TR:tr
+    LANG=tr_TR.UTF-8 \
+		LANGUAGE=tr_TR:tr \
 		LC_ALL=tr_TR.UTF-8 
 
 # Install critical runtime dependencies
