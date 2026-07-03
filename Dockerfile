@@ -29,8 +29,8 @@ LABEL maintainer="OMER KOLSAN" \
       description="Debian Docker image optimized for ARMv5 (legacy devices)"
 
 ENV DEBIAN_FRONTEND=noninteractive \
-    TZ=UTC \
-    LANG=en_US.UTF-8 
+    TZ=UTC+3 \
+    LANG=tr_TR.UTF-8 
 
 # Install critical runtime dependencies
 RUN apt-get update && \
@@ -44,6 +44,8 @@ RUN apt-get update && \
 				iproute2
     #rm -rf /var/lib/apt/lists/*
 
+RUN timedatectl set-timezone Europe/Istanbul
+
 #WORKDIR /opt/adguardhome
 
 # Copy binary from builder stage
@@ -52,6 +54,7 @@ RUN apt-get update && \
 # Setup directories and permissions
 RUN mkdir -p /run/sshd && \
     chmod 755 /run/sshd
+COPY sshd_config /etc/ssh/
 
 # Set root password
 RUN echo "root:root" | chpasswd
